@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Formulario de registro</title>
+</head>
+<body class="home-body">
+    <header>
+        <nav>
+            <section class="nav-logo-container">
+                <a href="/"><img src="/images/Hotel.png" alt="logotipo-empresa"></a>
+            </section>
+            <section class="navegacion-link">
+                <a href="/">Inicio</a>
+                <a href="/habitaciones">Habitaciones</a>
+                <a href="/clientes">Iniciar sesion</a>
+            </section>
+        </nav>
+    </header>
+      <main>
+        <div id="contenedor">
+            <h4><label for="·" style="color:#000000">Creacion de usuario</label></h4>
+            <div id="contenedorcentrado">
+                
+                <form method="post" enctype="multipart/form-data"
+						th:object="${clienteDto}">
+                    <ul>
+                      <li>
+                        <label class="col-sm-4 col-form-label">Nombre:</label>
+                        <input class="form-control" th:field="${clienteDto.nombre}" />
+                        <p
+									th:if"${#fields.hasErrors('nombre')}"
+									th:errorclass="text-danger"
+									th:errors="${clienteDto.nombre}"></p>
+                      </li>
+                      
+                      <br>
+                      <li>
+                        <label class="col-sm-4 col-form-label">Email: </label>
+                        <input type="email" id="mail" name="user_mail" class="form-control" th:field="${clienteDto.correo}" />
+                        <p th:if="${#fields.hasErrors('correo')}"
+									th:errorclass="text-danger" th:errors="${clienteDto.correo}"></p>
+                      </li>
+                      <br>
+                      <li>
+                        <label class="col-sm-4 col-form-label">Cedula: </label>
+                        <input class="form-control" th:field="${clienteDto.cedula}"/>
+                        <p th:if="${#fields.hasErrors('cedula')}"
+									th:errorclass="text-danger" th:errors="${clienteDto.cedula}"></p>
+                      </li>
+                      <br>
+                      <li>
+                        <label class="col-sm-4 col-form-label">Contraseña: </label>
+                        <input id="password" type="password" name="password" class="form-control" th:field="${clienteDto.contrasena}">
+                        <p th:if="${#fields.hasErrors('contrasena')}"
+									th:errorclass="text-danger" th:errors="${clienteDto.contrasena}"></p>
+                      </li>
+                    </ul>
+                    <button type="submit" >Crear usuario</button>
+                  </form>
+                  
+                    
+                </div>
+            </div>
+        </div>
+      </main>
+    
+        
+    <footer>
+        <p >
+            ©2024 Hotel T. Todos los derechos reservados.
+        </p>
+        <p >
+            Contáctanos: <br>
+                HotelT.Oficcialgmail.com
+        </p>
+    </footer>
+</body>
+</html>

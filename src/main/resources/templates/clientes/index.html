@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Inicio sesion</title>
+</head>
+
+<body class="home-body">
+    <header>
+        <section class="header-icons-container">
+            <div class="icons">
+                <a href="#"><span class="flaticon-001-facebook"></span></a>
+                <a href="#"><span class="flaticon-002-twitter"></span></a>
+                <a href="#"><Span class="flaticon-011-instagram"></Span></a>
+                <a href="#"><Span class="flaticon-010-linkedin"></Span></a>
+                <a href="#"><Span class="flaticon-009-youtube"></Span></a>
+            </div>
+        </section>
+        <nav>
+            <section class="nav-logo-container">
+                <a href="index.html"><img src="/images/Hotel.png" alt="logotipo-empresa"></a>
+            </section>
+            <section class="navegacion-link">
+                <a href="index.html">Inicio</a>
+                <a href="/habitaciones">Habitaciones</a>
+                <a href="/clientes">Iniciar sesion</a>
+            </section>
+        </nav>
+    </header>
+    <main>
+        <div id="contenedor">
+
+            <div id="contenedorcentrado">
+                <div id="login">
+                    <form id="loginform" method="post" enctype="multipart/form-data" th:object="${clienteDto}">
+                        <label for="usuario">Correo</label>
+                        <input type="email" id="mail" name="user_mail" class="form-control" th:field="${clienteDto.correo}" />
+
+                        <label for="password">Contraseña</label>
+                        <input id="password" type="password" name="password" class="form-control" th:field="${clienteDto.contrasena}">
+
+                        <button type="submit" title="Ingresar" name="Ingresar">Ingresar</button>
+                    </form>
+
+                </div>
+                <div id="derecho">
+                    <div class="titulo">
+                        Bienvenido
+                    </div>
+                    <hr>
+                    <div class="pie-form">
+                        <a href="/clientes/formularioRegistro">¿No tienes Cuenta? Registrate</a>
+                        <hr>
+                        <a href="index.html">« Volver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            ©2024 Hotel T. Todos los derechos reservados.
+        </p>
+        <p>
+            Contáctanos: <br>
+            HotelT.Oficcialgmail.com
+        </p>
+    </footer>
+</body>
+
+</html>

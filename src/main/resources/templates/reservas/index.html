@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hotel T</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+	<header>
+		<section class="header-icons-container">
+			<div class="icons">
+				<a href="#"><span class="flaticon-001-facebook"></span></a> <a
+					href="#"><span class="flaticon-002-twitter"></span></a> <a href="#"><Span
+					class="flaticon-011-instagram"></Span></a> <a href="#"><Span
+					class="flaticon-010-linkedin"></Span></a> <a href="#"><Span
+					class="flaticon-009-youtube"></Span></a>
+			</div>
+		</section>
+		<nav>
+			<section class="nav-logo-container">
+				<a href="index.html"><img src="/images/Hotel.png"
+					alt="logotipo-empresa"></a>
+			</section>
+			<section class="navegacion-link">
+				<a href="index.html">Inicio</a> <a href="/habitaciones">Habitaciones</a>
+				<a href="index.html">Cerrar sesion</a>
+			</section>
+		</nav>
+	</header>
+	<br>
+	<br>
+
+	<br>
+	<br>
+
+	<form method="post" enctype="multipart/form-data"
+		th:object="${clienteDto}">
+		<div class="row mb-3">
+			<label class="col-sm-4 col-form-label" style="color:#000000" >Bienvenido :</label>
+			<div class="col-sm-8">
+				<input readonly class="form-control-plaintext"
+					th:value="${clienteDto.nombre}">
+			</div>
+		</div>
+	</form>
+	
+	<div class="container">
+		
+		<h1 class="text-center my-4">Mis reservas</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Fecha inicio</th>
+					<th>Fecha fin</th>
+					<th>ID habitacion</th>
+				</tr>
+			</thead>
+			<tbody th:object="${reservas}">
+				<tr th:each="reserva : ${reservas}">
+					<td th:text="${reserva.id}"></td>
+					<td th:text="${reserva.fechaInicio}"></td>
+					<td th:text="${reserva.fechaFin}"></td>
+					<td th:text="${reserva.habitacion.id}"></td>
+					
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
+
+	<div class="container">
+		
+		<h1 class="text-center my-4">Habitaciones disponibles</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>DISPONIBILIDAD</th>
+					<th>NUMERO DE CAMAS</th>
+					<th>NUMERO DE BAÑOS</th>
+
+					<th>IMAGEN</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody th:object="${clienteDto}">
+				<tr th:each="habitacion : ${habitaciones}">
+					<td th:text="${habitacion.id}"></td>
+					<td th:text="${habitacion.disponibilidad}"></td>
+					<td th:text="${habitacion.numeroCamas}"></td>
+					<td th:text="${habitacion.numeroBanos}"></td>
+					<td><img
+						th:src="@{'/images/' +
+						${habitacion.nombreArchivoImagen}}"
+						alt="..." width="100"></td>
+					<td style="white-space: nowrap"><a
+						class="btn btn-primary btn-sm"
+						th:href="@{/reservas/crear(id=${habitacion.id},cedula=${clienteDto.cedula})}">Reservar</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
+	<footer>
+		<p>©2024 Hotel T. Todos los derechos reservados.</p>
+		<p>
+			Contáctanos: <br> HotelT.Oficcialgmail.com
+		</p>
+	</footer>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>
