@@ -2,6 +2,9 @@ package com.HotelT.crudresevas.springboodHotelT.models;
 
 
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -61,6 +64,22 @@ public class Reserva {
 
 	public void setHabitacion(Habitacion habitacion) {
 		this.habitacion = habitacion;
+	}
+	
+	public long diasTotales() {
+		LocalDate inicio=this.fechaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate fin=this.fechaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		Duration total= Duration.between(inicio.atStartOfDay(), fin.atStartOfDay());
+		if(total.toDays()<0) {
+			return 0;
+		}
+		return total.toDays()+1;
+	}
+	
+	public long valorReserva() {
+		Long dias= diasTotales();
+		return dias*500000;
+		
 	}
 
 	

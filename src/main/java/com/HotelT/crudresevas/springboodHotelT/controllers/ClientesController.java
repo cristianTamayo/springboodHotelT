@@ -17,6 +17,7 @@ import com.HotelT.crudresevas.springboodHotelT.models.*;
 import com.HotelT.crudresevas.springboodHotelT.services.ClientesRepository;
 import com.HotelT.crudresevas.springboodHotelT.services.HabitacionesRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -47,38 +48,61 @@ public class ClientesController {
 	}
 
 	@PostMapping("/formularioRegistro")
-	public String registrarCliente(@Valid @ModelAttribute ClienteDto clienteDto, BindingResult resultado) {
+	public String registrarCliente(@Valid @ModelAttribute ClienteDto clienteDto, BindingResult resultado,RedirectAttributes redirectAttributes) {
 		if (resultado.hasErrors()) {
 			return "clientes/registrarCliente";
 		}
-		// Registro en base de datos del nuevo registro.
-		Cliente  cliente= new Cliente();
-		cliente.setNombre(clienteDto.getNombre());
-		cliente.setCedula(clienteDto.getCedula());
-		cliente.setCorreo(clienteDto.getCorreo());
-		cliente.setPassword(clienteDto.getContrasena());
-		repo.save(cliente);
-
 		
-		return "redirect:/habitaciones";
+		//Buscar si cliente ya existe
+		Cliente clienteIdentificado = repo.findByCorreo(clienteDto.getCorreo());
+		if(clienteIdentificado==null) {
+			// Registro en base de datos del nuevo registro.
+			Cliente  cliente= new Cliente();
+			cliente.setNombre(clienteDto.getNombre());
+			cliente.setCedula(clienteDto.getCedula());
+			cliente.setCorreo(clienteDto.getCorreo());
+			cliente.setPassword(clienteDto.getContrasena());
+			cliente.setRol("Cliente");
+			repo.save(cliente);
+
+			redirectAttributes.addFlashAttribute("error", "Usuario creado correctamente");
+			return "redirect:/clientes";
+			
+		}
+		System.err.println("el correo ya esta registrado");
+		redirectAttributes.addFlashAttribute("error", "El correo ya esta registrado");
+		return "redirect:/clientes";
+		
 	}
 	
-	@PostMapping({ "", "/" })
-	public String inicioSesion(Model model,@ModelAttribute ClienteDto clienteDto, RedirectAttributes redirectAttributes){
-		Cliente cliente = repo.findByCorreoAndPassword(clienteDto.getCorreo(), clienteDto.getContrasena());
-		
-		if(cliente!=null) {
-			clienteDto.setNombre(cliente.getNombre());
-			clienteDto.setCedula(cliente.getCedula());
-			clienteDto.setCorreo(cliente.getCorreo());
-			clienteDto.setContrasena(cliente.getPassword());
-			model.addAttribute("cedula",clienteDto.getCedula());
-			redirectAttributes.addAttribute("cedula",clienteDto.getCedula());
-			
+	
+	@PostMapping({ "/inicioSesion" })
+	public String inicioSesion(Cliente cliente, HttpSession session,Model model, RedirectAttributes redirectAttributes) {
+		Cliente clienteIdentificado = repo.findByCorreoAndPassword(cliente.getCorreo(), cliente.getPassword());
+		if(clienteIdentificado!=null) {
+			if(clienteIdentificado.getRol().equals("Administrador")){
+				session.setAttribute("adminLogeado", clienteIdentificado);	
+				return "redirect:/administracion";
+			}
+			if(clienteIdentificado.getRol().equals("Trabajador")){
+				session.setAttribute("trabajadorLogeado", clienteIdentificado);	
+				return "redirect:/trabajadores/";
+			}
+			session.setAttribute("usuarioLogeado", clienteIdentificado);	
 			return "redirect:/reservas";
+		}else {
+			System.out.println("usuario no encontrado");
+			redirectAttributes.addFlashAttribute("error", "Correo o contraseña equivocado");
 		}
 		
-		return "redirect:/clientes/";
-		
+		return "redirect:/clientes";
 	}
+	
+	@GetMapping({ "/cerrarSesion" })
+	public String cerrarSesion(Model model, HttpSession session) {
+		session.removeAttribute("usuarioLogeado");
+		return "redirect:/clientes";
+	}
+	
+	
 }

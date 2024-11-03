@@ -4,6 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0
+.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min
+.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/p
+opper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.
+min.js"></script>
     <link rel="stylesheet" href="/style.css">
     <title>Inicio sesion</title>
 </head>
@@ -26,21 +38,28 @@
             <section class="navegacion-link">
                 <a href="index.html">Inicio</a>
                 <a href="/habitaciones">Habitaciones</a>
-                <a href="/clientes">Iniciar sesion</a>
+                <a href="#" style="color: #000000">Iniciar sesion</a>
             </section>
         </nav>
+        
+        <!-- mensajes -->
+        <div class="alert alert-danger alert-dismissable" th:if="${error != null}">
+        	<label th:text="${error}"></label>
+        	<button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+         
     </header>
     <main>
         <div id="contenedor">
 
             <div id="contenedorcentrado">
                 <div id="login">
-                    <form id="loginform" method="post" enctype="multipart/form-data" th:object="${clienteDto}">
+                    <form id="loginform" method="post" enctype="multipart/form-data" th:action="@{/clientes/inicioSesion}">
                         <label for="usuario">Correo</label>
-                        <input type="email" id="mail" name="user_mail" class="form-control" th:field="${clienteDto.correo}" />
+                        <input type="email" id="correo" name="correo" class="form-control" required/>
 
-                        <label for="password">Contraseña</label>
-                        <input id="password" type="password" name="password" class="form-control" th:field="${clienteDto.contrasena}">
+                        <label for="password" required>Contraseña</label>
+                        <input id="password" type="password" name="password" class="form-control" >
 
                         <button type="submit" title="Ingresar" name="Ingresar">Ingresar</button>
                     </form>

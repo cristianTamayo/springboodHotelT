@@ -17,6 +17,8 @@ public class ClienteDto {
 	@NotEmpty(message = "La contraseña es obligatoria")
 	private String contrasena;
 
+	private String rol;
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -48,6 +50,15 @@ public class ClienteDto {
 	public void setContrasena(String contraseña) {
 		this.contrasena = contraseña;
 	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+	
 	
 	
 }

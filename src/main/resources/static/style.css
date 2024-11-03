@@ -70,6 +70,15 @@ nav .nav-logo-container img{
     margin-top: 10px;
 }
 
+main .imagen-empresa img{
+	margin: auto;
+  width: 640px; 
+  padding: 30px;
+    margin-top: 10px;
+    border-radius:10%;
+    margin-left: 650px;
+}
+
 nav .navegacion-link{
     display: flex;
     align-items: center;

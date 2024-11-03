@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hotel T</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0
+.0/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min
+.js"></script>
+<!-- Popper JS -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/p
+opper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.
+min.js"></script>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+	<header>
+		<section class="header-icons-container">
+			<div class="icons">
+				<a href="#"><span class="flaticon-001-facebook"></span></a> <a
+					href="#"><span class="flaticon-002-twitter"></span></a> <a href="#"><Span
+					class="flaticon-011-instagram"></Span></a> <a href="#"><Span
+					class="flaticon-010-linkedin"></Span></a> <a href="#"><Span
+					class="flaticon-009-youtube"></Span></a>
+			</div>
+		</section>
+		<nav>
+			<section class="nav-logo-container">
+				<a href="#"><img src="/images/Hotel.png" alt="logotipo-empresa"></a>
+			</section>
+			<section class="navegacion-link">
+				<a href="/administracion">Empleados</a>				
+				<a href="#" style="color: #000000">Habitaciones</a>
+				<a href="/administracion/verReservas">Reservas</a>
+				<a href="/administracion/crearEmpleado">Ingresar empleado</a>
+				
+				<form id="logoutform" method="get" enctype="multipart/form-data"
+					th:action="@{/administracion/cerrarSesion}">
+					<button type="submit" title="salir" name="salir">Cerrar
+						sesion</button>
+				</form>
+			</section>
+		</nav>
+
+		<!-- mensajes -->
+		<div class="alert alert-danger alert-dismissable"
+			th:if="${error != null}">
+			<label th:text="${error}"></label>
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+
+	</header>
+
+	<br>
+	<br>
+
+	<br>
+	<br>
+
+	<div th:object="${adminDto}">
+		<label class="col-sm-2 col-form-label" style="color: #000000">Bienvenido admin:</label>
+		<label class="col-sm-1 col-form-label" style="color: #000000"
+			th:text="${adminDto.nombre}"> </label>
+	</div>
+	
+	<div class="container">
+		
+		<h1 class="text-center my-4">Lista habitaciones</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Disponibilidad</th>
+					<th>Numero camas</th>
+					<th>Numero baños</th>
+					<th>Imagen</th>
+					<th>Opcion</th>
+				</tr>
+			</thead>
+			<tbody th:object="${habitaciones}">
+				<tr th:each="habitacion : ${habitaciones}">
+					<td th:text="${habitacion.id}"></td>
+					<td th:text="${habitacion.disponibilidad}"></td>
+					<td th:text="${habitacion.numeroCamas}"></td>
+					<td th:text="${habitacion.numeroBanos}"></td>
+					<td>
+						<img th:src="@{'/images/' +
+						${habitacion.nombreArchivoImagen}}"
+						alt="..." width="100">
+					</td>
+					<td style="white-space: nowrap"><a
+						class="btn btn-primary btn-sm"
+						th:href="@{/administracion/editarHabitacion(idHabitacion=${habitacion.id})}">Editar</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+		<div>
+			<a class="btn btn-primary btn-sm" th:href="@{/administracion/crearHabitacion}">Crear habitacion nueva</a>
+		</div>
+
+	</div>
+
+	<footer>
+		<p>©2024 Hotel T. Todos los derechos reservados.</p>
+		<p>
+			Contáctanos: <br> HotelT.Oficcialgmail.com
+		</p>
+	</footer>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+
+</body>

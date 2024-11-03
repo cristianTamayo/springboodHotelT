@@ -1,5 +1,6 @@
 package com.HotelT.crudresevas.springboodHotelT.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -13,9 +14,10 @@ public class Cliente {
 	private String nombre;   
     private String correo;
     private String password;
+    private String rol;
     
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente",cascade= CascadeType.ALL)
-   private List<Reserva> reservas;
+   private List<Reserva> reservas = new ArrayList<Reserva>();
 
     public Cliente() {
     }
@@ -71,10 +73,35 @@ public class Cliente {
 		return reservas;
 	}
 
+	
+
+	public String getRol() {
+		return rol;
+	}
+
+
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
 
 
 	public void setReservas(List<Reserva> reservas) {
 		this.reservas = reservas;
+	}
+	
+	public void addReserva(Reserva reserva) {
+		this.reservas.add(reserva);
+	}
+	
+	public long totalReservas() {
+		long total=0;
+		for(Reserva reserva :this.reservas) {
+			total+=reserva.valorReserva();
+		    }
+		
+		return total;
 	}
     
 }
