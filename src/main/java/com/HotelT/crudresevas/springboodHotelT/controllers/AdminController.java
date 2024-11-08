@@ -19,9 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.HotelT.crudresevas.springboodHotelT.models.Cliente;
 import com.HotelT.crudresevas.springboodHotelT.models.ClienteDto;
 import com.HotelT.crudresevas.springboodHotelT.models.Habitacion;
+import com.HotelT.crudresevas.springboodHotelT.models.RegistroLimpieza;
 import com.HotelT.crudresevas.springboodHotelT.models.Reserva;
 import com.HotelT.crudresevas.springboodHotelT.services.ClientesRepository;
 import com.HotelT.crudresevas.springboodHotelT.services.HabitacionesRepository;
+import com.HotelT.crudresevas.springboodHotelT.services.LimpiezaRepository;
 import com.HotelT.crudresevas.springboodHotelT.services.ReservasRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +37,8 @@ public class AdminController {
 	private ClientesRepository repoClientes;
 	@Autowired
 	private ReservasRepository repoReservas;
+	@Autowired
+	private LimpiezaRepository repoLimpieza;
 	
 	@GetMapping({"","/"})
 	public String mostrarListaHabitaciones(Model model, HttpSession session) {
@@ -223,5 +227,23 @@ public class AdminController {
 		
 		redirectAttributes.addFlashAttribute("error", "Empleado "+ empleado.getNombre() +" editado");
 		return "redirect:/administracion";
+	}
+	
+	@GetMapping({"/verRegistrosLimpieza"})
+	public String vistaRegistrosLimpieza(Model model, HttpSession session,@RequestParam int idHabitacion) {
+		Cliente admin = (Cliente)session.getAttribute("adminLogeado");
+		ClienteDto adminDto= new ClienteDto();
+		adminDto.setNombre(admin.getNombre());
+		adminDto.setCedula(admin.getCedula());
+		adminDto.setCorreo(admin.getCorreo());
+		adminDto.setContrasena(admin.getPassword());
+		model.addAttribute("adminDto", adminDto);
+		
+		//Trayendo la info de la habitacion a editar
+		Habitacion habitacion = repoHabitaciones.findById(idHabitacion);
+		model.addAttribute("habitacion",idHabitacion);
+		List<RegistroLimpieza> registrosLimpieza = repoLimpieza.findAllByIdHabitacion(idHabitacion);
+		model.addAttribute("registrosLimpieza",registrosLimpieza);
+		return "administracion/registrosLimpieza";
 	}
 }

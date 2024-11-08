@@ -39,11 +39,7 @@ min.js"></script>
 				<a href="#"><img src="/images/Hotel.png" alt="logotipo-empresa"></a>
 			</section>
 			<section class="navegacion-link">
-				<a href="/administracion">Empleados</a>				
-				<a href="#" style="color: #000000">Habitaciones</a>
-				<a href="/administracion/verReservas">Reservas</a>
-				<a href="/administracion/crearEmpleado">Ingresar empleado</a>
-				
+
 				<form id="logoutform" method="get" enctype="multipart/form-data"
 					th:action="@{/administracion/cerrarSesion}">
 					<button type="submit" title="salir" name="salir">Cerrar
@@ -68,51 +64,43 @@ min.js"></script>
 	<br>
 
 	<div th:object="${adminDto}">
-		<label class="col-sm-2 col-form-label" style="color: #000000">Bienvenido admin:</label>
-		<label class="col-sm-1 col-form-label" style="color: #000000"
+		<label class="col-sm-2 col-form-label" style="color: #000000">Bienvenido
+			admin:</label> <label class="col-sm-1 col-form-label" style="color: #000000"
 			th:text="${adminDto.nombre}"> </label>
 	</div>
-	
-	<div class="container">
-		
-		<h1 class="text-center my-4">Lista habitaciones</h1>
 
+	<div class="container">
+		<div >
+			<h1 class="text-center my-4"> Registros de limpieza de la habitacion</h1>
+			
+		</div>
+		
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Id</th>
-					<th>Disponibilidad</th>
-					<th>Numero camas</th>
-					<th>Numero baños</th>
-					<th>Imagen</th>
-					<th>Opcion</th>
-					<th>Limpieza</th>
+					<th>Habitacion</th>
+					<th>Registro#</th>
+					<th>Fecha realizacion</th>
+					<th>Descripcion</th>
+					<th>Novedades</th>
+					<th>CC Empleado</th>
 				</tr>
 			</thead>
-			<tbody th:object="${habitaciones}">
-				<tr th:each="habitacion : ${habitaciones}">
-					<td th:text="${habitacion.id}"></td>
-					<td th:text="${habitacion.disponibilidad}"></td>
-					<td th:text="${habitacion.numeroCamas}"></td>
-					<td th:text="${habitacion.numeroBanos}"></td>
-					<td>
-						<img th:src="@{'/images/' +
-						${habitacion.nombreArchivoImagen}}"
-						alt="..." width="100">
-					</td>
-					<td style="white-space: nowrap"><a
-						class="btn btn-primary btn-sm"
-						th:href="@{/administracion/editarHabitacion(idHabitacion=${habitacion.id})}">Editar</a></td>
-						
-					<td style="white-space: nowrap"><a
-						class="btn btn-primary btn-sm"
-						th:href="@{/administracion/verRegistrosLimpieza(idHabitacion=${habitacion.id})}">Registros</a></td>
+			<tbody th:object="${registrosLimpieza}">
+				<tr th:each="registro : ${registrosLimpieza}">
+					<td th:text="${registro.idHabitacion}"></td>
+					<td th:text="${registro.id}"></td>
+					<td th:text="${registro.fecha}"></td>
+					<td th:text="${registro.descripcion}"></td>
+					<td th:text="${registro.novedades}"></td>
+					<td th:text="${registro.cedulaEmpleado}"></td>
 				</tr>
 
 			</tbody>
 		</table>
-		<div>
-			<a class="btn btn-primary btn-sm" th:href="@{/administracion/crearHabitacion}">Crear habitacion nueva</a>
+		<div class="col-sm-4 d-grid">
+			<a class="btn btn-outline-primary"
+				href="/administracion/verHabitaciones" role="button">Cancelar</a>
 		</div>
 
 	</div>

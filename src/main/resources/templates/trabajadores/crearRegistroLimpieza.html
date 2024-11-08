@@ -22,7 +22,8 @@ opper.min.js"></script>
 min.js"></script>
 <link rel="stylesheet" href="../style.css">
 </head>
-<body>
+
+<body class="home-body">
 
 	<header>
 		<section class="header-icons-container">
@@ -38,16 +39,7 @@ min.js"></script>
 			<section class="nav-logo-container">
 				<a href="#"><img src="/images/Hotel.png" alt="logotipo-empresa"></a>
 			</section>
-			<section class="navegacion-link">			
-				<a href="#" style="color: #000000">Habitaciones</a>
-				<a href="/trabajadores/verRegistrosLimpieza">Limpieza</a>
-				
-				<form id="logoutform" method="get" enctype="multipart/form-data"
-					th:action="@{/trabajadores/cerrarSesion}">
-					<button type="submit" title="salir" name="salir">Cerrar
-						sesion</button>
-				</form>
-			</section>
+
 		</nav>
 
 		<!-- mensajes -->
@@ -59,64 +51,78 @@ min.js"></script>
 
 	</header>
 
-	<br>
-	<br>
-
-	<br>
-	<br>
-
 	<form method="post" enctype="multipart/form-data"
 		th:object="${clienteDto}">
 		<div class="row mb-3">
-			<label class="col-sm-4 col-form-label" style="color:#000000" >Bienvenido trabajador:</label>
+			<label class="col-sm-4 col-form-label" style="color: #000000">Bienvenido
+				trabajador:</label>
 			<div class="col-sm-8">
 				<input readonly class="form-control-plaintext"
 					th:value="${trabajadorDto.nombre}">
 			</div>
 		</div>
 	</form>
-	
+
 	<div class="container">
-		
-		<h1 class="text-center my-4">Lista habitaciones</h1>
+		<div clas="container">
+			<div class="row">
+				<div class="col-md-8 mx-auto rounded border p-4 m-4">
+					<h2 class="text-center mb-5">Registrar servicio de limpieza</h2>
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Disponibilidad</th>
-					<th>Numero camas</th>
-					<th>Numero baños</th>
-					<th>Imagen</th>
-					<th>Editar</th>
-					<th>Limpieza</th>
-				</tr>
-			</thead>
-			<tbody th:object="${habitaciones}">
-				<tr th:each="habitacion : ${habitaciones}">
-					<td th:text="${habitacion.id}"></td>
-					<td th:text="${habitacion.disponibilidad}"></td>
-					<td th:text="${habitacion.numeroCamas}"></td>
-					<td th:text="${habitacion.numeroBanos}"></td>
-					<td>
-						<img th:src="@{'/images/' +
-						${habitacion.nombreArchivoImagen}}"
-						alt="..." width="100">
-					</td>
-					<td style="white-space: nowrap"><a
-						class="btn btn-primary btn-sm"
-						th:href="@{/trabajadores/editarHabitacion(idHabitacion=${habitacion.id})}">Editar</a></td>
-						
-					<td style="white-space: nowrap"><a
-						class="btn btn-primary btn-sm"
-						th:href="@{/trabajadores/crearRegistroLimpieza(idHabitacion=${habitacion.id})}">Registrar</a></td>
-				</tr>
+					<form method="post" enctype="multipart/form-data" th:object="${habitacion}">
 
-			</tbody>
-		</table>
+						<div>
 
+						<div class="row">
+							<label   style="color: #000000">Fecha</label>
+							<div>
+								<input type="date" id="fecha" name="fecha" required />
+							</div>
+						</div>
+						<div class="row">
+							<div>
+								<label style="color: #000000">Descripcion</label>
+							</div>
+							
+							<div >
+								<input class="form-control" id="descripcion" name="descripcion" required>
+							</div>
+						</div>
+						<div class="row">
+							<label style="color: #000000" >Novedades</label> 
+								<div >
+									<input id="novedades" name="novedades" class="form-control" required>
+								</div>
+						</div>
+
+						<div class="row">
+							<label style="color: #000000">Habitacion</label> 
+								<div >
+									<input id="idHabitacion" name="idHabitacion" class="form-control" th:value="${habitacion.id}" readonly>
+								</div>
+						</div>
+
+						</div>
+
+						<br> <br>
+
+
+
+						<div class="row">
+							<div class="offset-sm-4 col-sm-4 d-grid">
+								<button type="submit" class="btn btn-primary">Crear
+									registro</button>
+							</div>
+							<div class="col-sm-4 d-grid">
+								<a class="btn btn-outline-primary"
+									href="/trabajadores/" role="button">Cancelar</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-
 	<footer>
 		<p>©2024 Hotel T. Todos los derechos reservados.</p>
 		<p>
@@ -127,5 +133,6 @@ min.js"></script>
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
-
 </body>
+
+</html>
